@@ -35,7 +35,7 @@ class LoginScreen extends React.Component {
           />
           <TouchableOpacity
             style={styles.buttonContainer}
-            onPress={() => Actions.profileScreen() }>
+            onPress={() => Actions.profileScreen({ type: 'replace' }) }>
             <View>
               <Text style={styles.button}>Login</Text>
             </View>
