@@ -11,7 +11,37 @@ import {
 import { Actions } from 'react-native-router-flux'
 
 class LoginScreen extends React.Component {
+
+  constructor (props) {
+    super(props)
+    this.state = {
+      username: '',
+      password: '',
+      message: ''
+    }
+  }
+
+  _doLogin = () => {
+    const { username, password } = this.state
+    if (username === 'fbmasterclass' && password === 'fbmasterclass') {
+      Actions.profileScreen({ type: 'replace' })
+      this.setState({ username: '', password: '', message: '' })
+    } else {
+      this.setState({ message: 'Username / password is not correct!'})
+    }
+  }
+
+  _renderMessage = () => {
+    const { message } = this.state
+    return (
+      <Text style={styles.error}>
+        {message}
+      </Text>
+    )
+  }
+
   render () {
+    const { username, password, message } = this.state
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
@@ -21,22 +51,31 @@ class LoginScreen extends React.Component {
           Yuk mari belajar React Native bersama Facebook Developers Circle
         </Text>
         <View style={styles.formContainer}>
+          { (message && message !== '')
+            ? this._renderMessage()
+            : null
+          }
           <TextInput
             style={styles.input}
             placeholder={'Username'}
             autoCapitalize={'none'}
             autoCorrect={false}
             underlineColorAndroid={'transparent'}
+            onChangeText={(username) => this.setState({ username })}
+            value={username}
           />
           <TextInput
             style={styles.input}
             placeholder={'Password'}
             autoCapitalize={'none'}
             autoCorrect={false}
+            secureTextEntry={true}
+            onChangeText={(password) => this.setState({ password })}
+            value={password}
           />
           <TouchableOpacity
             style={styles.buttonContainer}
-            onPress={() => Actions.profileScreen({ type: 'replace' }) }>
+            onPress={() => this._doLogin() }>
             <View>
               <Text style={styles.button}>Login</Text>
             </View>
@@ -83,5 +122,10 @@ const styles = StyleSheet.create({
   },
   button: {
     color: '#FFFFFF'
+  },
+  error: {
+    textAlign: 'center',
+    color: '#DC1018',
+    marginBottom: 5,
   }
 });
