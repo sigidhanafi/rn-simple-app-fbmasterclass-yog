@@ -5,6 +5,7 @@ import {
   Button,
   TextInput,
   TouchableOpacity,
+  Platform,
   StyleSheet
 } from 'react-native'
 import { Actions } from 'react-native-router-flux'
@@ -52,6 +53,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F6F7F8',
+    marginTop: Platform.OS === 'ios' ? 60 : 54
   },
   welcome: {
     fontSize: 20,
